@@ -1,5 +1,5 @@
 FROM phusion/baseimage:latest
-MAINTAINER Brendan Tobolaski "brendan@tobolaski.com"
+MAINTAINER Gavin Mogan "gavin@gavinmogan.com"
 ENV OC_VERSION 8.2.1
 RUN apt-get -y update
 RUN apt-get install -y apache2 php5 php5-gd php-xml-parser php5-intl php5-mysqlnd php5-json php5-mcrypt smbclient curl libcurl3 php5-curl bzip2 wget
@@ -7,9 +7,15 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
-RUN curl -k https://download.owncloud.org/community/owncloud-$OC_VERSION.tar.bz2 | tar jx -C /var/www/
-RUN git clone -b v2.0 https://github.com/owncloud/notes.git /var/www/owncloud/notes
-RUN git clone -b v2.5.2.187 https://github.com/Fmstrat/owncloud /var/www/owncloud/ownnote
+RUN curl -L https://download.owncloud.org/community/owncloud-$OC_VERSION.tar.bz2 | tar jx -C /var/www/
+RUN mkdir -p /var/www/owncloud/apps/notes
+RUN curl -L https://github.com/owncloud/notes/archive/v2.0.tar.gz | tar xz -C /var/www/owncloud/apps/notes
+RUN mkdir -p /var/www/owncloud/apps/ownnote
+RUN curl -L https://github.com/Fmstrat/owncloud/archive/v2.5.2.187.tar.gz | tar xz -C /var/www/owncloud/apps/ownnote
+RUN mkdir -p /var/www/owncloud/apps/ocsms
+RUN curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz -C /var/www/owncloud/apps/ocsms
+RUN mkdir -p /var/www/owncloud/apps/qownnotesapi
+RUN curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz -C /var/www/owncloud/apps/qownnotesapi
 RUN mkdir /var/www/owncloud/data
 RUN chown -R www-data:www-data /var/www/owncloud
 
