@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+    - docker
+
+language: go
+
+go:
+    - '1.5'
+
+after_success:
+  - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=halkeye/docker-owncloud
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
+env:
+  global:
+    - secure: WkfMsWmouOgAgYf/Q7yq41tPaq1EvuOe5m9GRuJSQMk1MpAClx0kLnLY+OYYrX2JwmQTdBfaK7v9KOt8i3Ybcly9R5+LwbfUBfNqYeFWoFWn1xokHQ+V48+sZ+Y1nxFo3B32FsrvQXBu/593mGmYVBZ2W+sD4Tjvfsz1Qv2JlNb85Xe0nqyc90Jh3+a6KtPvFcKJ2oa6XuP8Vd5LlKM6xrvCc57SodGz5q1R6V0rgHWl+V0Wv9an/oFtT7HZi7mOkomu0hpA8B3ghT03PBE6ojW0Rs4hMbDIUti1Ib71TE7k60HI4viErz7FkaUGb4zPBlPFBHUJhlcB9GIffQ/Lc2naKPcAiwN6Dqk1BCEIHoXDanjvN9JSUy4PeCjdnUlFMJ9uGXVtbTSYoBE1nIcIupRKbhmOfN0Lq+UYN7IYWU4ZFsz3EhlV8z8PIYNl+zFNxpKDLtrAJfplWrjNdYL1hUJH8OqsFTqbgUXI9wGkAB+w2jU27gWyba3yPSYGfx986LqkmKcceRJZxtArPs7VA+86S/Zby0y12cs2KrFFddHa2/9wKfjT2m8BrLIoBGPaTdst/uv7kBw6rekIcuG7mmu2pR6KbUHNmtBwxem6LaPT5RqLTezdnpiotURn6vIrsUywT09NZapWLLmIH0StT0X88Iumomdcse+/XjN+i/o=
+    - COMMIT=${TRAVIS_COMMIT::8}
