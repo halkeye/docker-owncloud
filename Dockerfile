@@ -8,6 +8,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 RUN curl -k https://download.owncloud.org/community/owncloud-$OC_VERSION.tar.bz2 | tar jx -C /var/www/
+RUN git clone -b v2.0 https://github.com/owncloud/notes.git /var/www/owncloud/notes
+RUN git clone -b v2.5.2.187 https://github.com/Fmstrat/owncloud /var/www/owncloud/ownnote
 RUN mkdir /var/www/owncloud/data
 RUN chown -R www-data:www-data /var/www/owncloud
 
