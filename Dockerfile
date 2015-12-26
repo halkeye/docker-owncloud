@@ -9,13 +9,13 @@ RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 RUN curl -L https://download.owncloud.org/community/owncloud-$OC_VERSION.tar.bz2 | tar jx -C /var/www/
 RUN mkdir -p /var/www/owncloud/apps/notes
-RUN curl -L https://github.com/owncloud/notes/archive/v2.0.tar.gz | tar xz -C /var/www/owncloud/apps/notes
+RUN curl -L https://github.com/owncloud/notes/archive/v2.0.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/notes
 RUN mkdir -p /var/www/owncloud/apps/ownnote
-RUN curl -L https://github.com/Fmstrat/owncloud/archive/v2.5.2.187.tar.gz | tar xz -C /var/www/owncloud/apps/ownnote
+RUN curl -L https://github.com/Fmstrat/owncloud/archive/v2.5.2.187.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/ownnote
 RUN mkdir -p /var/www/owncloud/apps/ocsms
-RUN curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz -C /var/www/owncloud/apps/ocsms
+RUN curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/ocsms
 RUN mkdir -p /var/www/owncloud/apps/qownnotesapi
-RUN curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz -C /var/www/owncloud/apps/qownnotesapi
+RUN curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/qownnotesapi
 RUN mkdir /var/www/owncloud/data
 RUN chown -R www-data:www-data /var/www/owncloud
 
