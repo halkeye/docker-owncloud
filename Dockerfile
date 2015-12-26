@@ -16,6 +16,9 @@ RUN mkdir -p /var/www/owncloud/apps/ocsms
 RUN curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/ocsms
 RUN mkdir -p /var/www/owncloud/apps/qownnotesapi
 RUN curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/qownnotesapi
+RUN mkdir -p /var/www/owncloud/apps/contacts
+RUN curl -L https://github.com/owncloud/contacts/releases/download/v0.5.0.0/contacts.tar.gz | tar xz --strip-components=1 -C /var/www/owncloud/apps/contacts
+
 RUN mkdir /var/www/owncloud/data
 RUN chown -R www-data:www-data /var/www/owncloud
 
