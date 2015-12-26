@@ -8,6 +8,8 @@ language: shell
 install: true
 
 script:
+  - docker version
+  - docker login
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export REPO=halkeye/docker-owncloud
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
