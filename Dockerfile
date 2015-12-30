@@ -12,6 +12,8 @@ RUN apt-get -y update && apt-get install -y \
       libpng12-dev \
       libpq-dev \
       libxml2-dev \
+      build-essential \
+      apache2-threaded-dev \
       && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #gpg key from https://owncloud.org/owncloud.asc
@@ -36,7 +38,21 @@ RUN { \
 RUN pecl install APCu-4.0.10 redis memcached \
   && docker-php-ext-enable apcu redis memcached
 
+RUN mkdir -p /root/src/mod_rpaf \
+    && curl -L https://github.com/gnif/mod_rpaf/archive/stable.tar.gz | tar xz --strip-components=1 -C /root/src/mod_rpaf \
+    && (cd /root/src/mod_rpaf && make && make install)
+
 RUN a2enmod rewrite
+
+RUN { \
+    echo 'LoadModule              rpaf_module /usr/lib/apache2/modules/mod_rpaf.so'; \
+    echo 'RPAF_Enable             On'; \
+    echo 'RPAF_ProxyIPs           172.17.0.1 127.0.0.1 10.0.0.0/24'; \
+    echo 'RPAF_SetHostName        On'; \
+    echo 'RPAF_SetHTTPS           On'; \
+    echo 'RPAF_SetPort            On'; \
+    echo 'RPAF_ForbidIfNotProxy   On'; \
+  } > /etc/apache2/mods-enabled/rpaf.conf
 
 ENV OWNCLOUD_VERSION=8.2.2 OWNCLOUD_ROOT=/var/www/owncloud
 

@@ -1,5 +1,0 @@
-#!/bin/sh
-if [ ! -z "$MYSQL_PORT_3306_TCP_ADDR" ]; then
-	sed -i "s/.*dbhost.*/  'dbhost' => '$MYSQL_PORT_3306_TCP_ADDR',/" /var/www/owncloud/config/config.php
-fi
-service apache2 start
