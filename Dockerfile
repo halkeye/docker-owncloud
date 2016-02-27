@@ -89,6 +89,9 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/calendar \
     && curl -L https://github.com/owncloud/calendar/archive/v0.8.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/calendar
 # Move app - https://apps.owncloud.com/content/show.php?content=150271
 RUN curl -L https://apps.owncloud.com/CONTENT/content-files/150271-files_mv.tar.gz | tar xz -C ${OWNCLOUD_ROOT}/apps
+# Mozilla Sync - https://apps.owncloud.com/content/show.php/Mozilla+Sync?content=161793
+RUN mkdir -p ${OWNCLOUD_ROOT}/apps/mozilla_sync \
+    && curl -L https://github.com/owncloud/mozilla_sync/archive/v1.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/mozilla_sync
 
 # lock down ownership of everything
 RUN chown -R www-data:www-data ${OWNCLOUD_ROOT}
