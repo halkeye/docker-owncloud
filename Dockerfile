@@ -21,7 +21,9 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys E3036906AD9F30807351F
 
 # https://doc.owncloud.org/server/8.1/admin_manual/installation/source_installation.html#prerequisites
 RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-  && docker-php-ext-install gd intl mbstring mcrypt mysql opcache pdo_mysql pdo_pgsql pgsql zip
+  && docker-php-ext-install gd intl mbstring mcrypt mysql opcache pdo_mysql pdo_pgsql pgsql zip \
+  && pecl install rar && docker-php-ext-enable rar
+
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -92,6 +94,8 @@ RUN curl -L https://apps.owncloud.com/CONTENT/content-files/150271-files_mv.tar.
 # Mozilla Sync - https://apps.owncloud.com/content/show.php/Mozilla+Sync?content=161793
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/mozilla_sync \
     && curl -L https://github.com/owncloud/mozilla_sync/archive/v1.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/mozilla_sync
+RUN mkdir -p ${OWNCLOUD_ROOT}/apps/files_epubviewer \
+    && curl -L https://apps.owncloud.com/CONTENT/content-files/166614-files_epubviewer_oc7.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/files_epubviewer
 
 # lock down ownership of everything
 RUN chown -R www-data:www-data ${OWNCLOUD_ROOT}
