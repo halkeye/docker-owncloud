@@ -56,7 +56,7 @@ RUN { \
     echo 'RPAF_ForbidIfNotProxy   On'; \
   } > /etc/apache2/mods-enabled/rpaf.conf
 
-ENV OWNCLOUD_VERSION=8.2.2 OWNCLOUD_ROOT=/var/www/owncloud
+ENV OWNCLOUD_VERSION=9.0.1 OWNCLOUD_ROOT=/var/www/owncloud
 
 # Create config && data Directory
 RUN mkdir ${OWNCLOUD_ROOT} ${OWNCLOUD_ROOT}/data ${OWNCLOUD_ROOT}/config \
@@ -81,14 +81,12 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/qownnotesapi \
     && curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/qownnotesapi
 # Temp
 RUN apt-get -y update && apt-get install -y patch && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-# add https://github.com/owncloud/contacts/pull/1032 patch till its in a fixed release
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/contacts \
-    && curl -L https://github.com/owncloud/contacts/archive/v0.5.0.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts \
-    && curl https://patch-diff.githubusercontent.com/raw/owncloud/contacts/pull/1032.diff | patch -p 1 -d ${OWNCLOUD_ROOT}/apps/contacts
+    && curl -L https://github.com/owncloud/contacts/archive/v1.1.0.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/tasks \
     && curl -L https://github.com/owncloud/tasks/archive/v0.8.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/tasks
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/calendar \
-    && curl -L https://github.com/owncloud/calendar/archive/v0.8.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/calendar
+    && curl -L https://github.com/owncloud/calendar/archive/v1.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/calendar
 # Move app - https://apps.owncloud.com/content/show.php?content=150271
 RUN curl -L https://apps.owncloud.com/CONTENT/content-files/150271-files_mv.tar.gz | tar xz -C ${OWNCLOUD_ROOT}/apps
 # Mozilla Sync - https://apps.owncloud.com/content/show.php/Mozilla+Sync?content=161793
