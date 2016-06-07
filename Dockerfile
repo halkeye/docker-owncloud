@@ -98,7 +98,7 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/files_epubviewer \
 # lock down ownership of everything
 RUN chown -R www-data:www-data ${OWNCLOUD_ROOT}
 
-VOLUME ["${OWNCLOUD_ROOT}/data", "${OWNCLOUD_ROOT}/config", "/tmp/mysql.sock"]
+VOLUME ["${OWNCLOUD_ROOT}/data", "${OWNCLOUD_ROOT}/config", "/tmp/mysql.sock", "/var/run/mysqld/mysqld.sock"]
 EXPOSE 80
 
 CMD ["apache2-foreground"]
