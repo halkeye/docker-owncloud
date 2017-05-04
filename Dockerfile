@@ -1,5 +1,6 @@
-FROM php:5.6-apache
+FROM php:7.1-apache
 MAINTAINER Gavin Mogan "gavin@gavinmogan.com"
+ENV OWNCLOUD_VERSION=10.0.0 OWNCLOUD_ROOT=/var/www/owncloud
 
 RUN apt-get -y update && apt-get install -y \
       bzip2 \
@@ -56,8 +57,6 @@ RUN { \
     echo 'RPAF_ForbidIfNotProxy   On'; \
   } > /etc/apache2/mods-enabled/rpaf.conf
 
-ENV OWNCLOUD_VERSION=9.0.1 OWNCLOUD_ROOT=/var/www/owncloud
-
 # Create config && data Directory
 RUN mkdir ${OWNCLOUD_ROOT} ${OWNCLOUD_ROOT}/data ${OWNCLOUD_ROOT}/config \
     && rm -rf /var/www/html && ln -s ${OWNCLOUD_ROOT} /var/www/html
@@ -75,8 +74,8 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/notes \
     && curl -L https://github.com/owncloud/notes/archive/v2.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/notes
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/ownnote \
     && curl -L https://github.com/Fmstrat/ownnote/archive/ownNote-1.05.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/ownnote
-RUN mkdir -p ${OWNCLOUD_ROOT}/apps/ocsms \
-    && curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/ocsms
+#RUN mkdir -p ${OWNCLOUD_ROOT}/apps/ocsms \
+#    && curl -L https://github.com/nerzhul/ocsms/archive/v1.5.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/ocsms
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/qownnotesapi \
     && curl -L https://apps.owncloud.com/CONTENT/content-files/173817-qownnotesapi.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/qownnotesapi
 # Temp
