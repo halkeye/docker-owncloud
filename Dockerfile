@@ -81,7 +81,7 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/qownnotesapi \
 # Temp
 RUN apt-get -y update && apt-get install -y patch && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/contacts \
-    && curl -L https://github.com/owncloud/contacts/archive/v1.5.2.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts
+    && curl -L https://github.com/owncloud/contacts/archive/1.5.2.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/tasks \
     && curl -L https://github.com/owncloud/tasks/archive/v0.9.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/tasks
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/calendar \
