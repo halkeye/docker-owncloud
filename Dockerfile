@@ -81,18 +81,20 @@ RUN mkdir -p ${OWNCLOUD_ROOT}/apps/qownnotesapi \
 # Temp
 RUN apt-get -y update && apt-get install -y patch && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/contacts \
-    && curl -L https://github.com/owncloud/contacts/archive/v1.1.0.0.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts
+    && curl -L https://github.com/owncloud/contacts/archive/v1.5.2.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/contacts
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/tasks \
-    && curl -L https://github.com/owncloud/tasks/archive/v0.8.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/tasks
+    && curl -L https://github.com/owncloud/tasks/archive/v0.9.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/tasks
 RUN mkdir -p ${OWNCLOUD_ROOT}/apps/calendar \
-    && curl -L https://github.com/owncloud/calendar/archive/v1.1.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/calendar
+    && curl -L https://github.com/owncloud/calendar/archive/v1.3.3.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/calendar
+RUN mkdir -p ${OWNCLOUD_ROOT}/apps/files_opds \
+    && curl -L https://github.com/Yetangitu/owncloud-apps/raw/master/dist/files_opds-0.8.2.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/files_opds
 # Move app - https://apps.owncloud.com/content/show.php?content=150271
-RUN curl -L https://apps.owncloud.com/CONTENT/content-files/150271-files_mv.tar.gz | tar xz -C ${OWNCLOUD_ROOT}/apps
+#RUN curl -L https://apps.owncloud.com/CONTENT/content-files/150271-files_mv.tar.gz | tar xz -C ${OWNCLOUD_ROOT}/apps
 # Mozilla Sync - https://apps.owncloud.com/content/show.php/Mozilla+Sync?content=161793
-RUN mkdir -p ${OWNCLOUD_ROOT}/apps/mozilla_sync \
-    && curl -L https://github.com/owncloud/mozilla_sync/archive/v1.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/mozilla_sync
-RUN mkdir -p ${OWNCLOUD_ROOT}/apps/files_epubviewer \
-    && curl -L https://apps.owncloud.com/CONTENT/content-files/166614-files_epubviewer_oc7.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/files_epubviewer
+#RUN mkdir -p ${OWNCLOUD_ROOT}/apps/mozilla_sync \
+#    && curl -L https://github.com/owncloud/mozilla_sync/archive/v1.4.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/mozilla_sync
+#RUN mkdir -p ${OWNCLOUD_ROOT}/apps/files_epubviewer \
+#    && curl -L https://apps.owncloud.com/CONTENT/content-files/166614-files_epubviewer_oc7.tar.gz | tar xz --strip-components=1 -C ${OWNCLOUD_ROOT}/apps/files_epubviewer
 
 # lock down ownership of everything
 RUN chown -R www-data:www-data ${OWNCLOUD_ROOT}
