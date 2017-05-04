@@ -22,8 +22,8 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys E3036906AD9F30807351F
 
 # https://doc.owncloud.org/server/8.1/admin_manual/installation/source_installation.html#prerequisites
 RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-  && docker-php-ext-install gd intl mbstring mcrypt mysql opcache pdo_mysql pdo_pgsql pgsql zip \
-  && pecl install rar && docker-php-ext-enable rar
+  && docker-php-ext-install gd intl mbstring mcrypt opcache pdo_mysql zip
+#  && pecl install rar && docker-php-ext-enable rar
 
 
 # set recommended PHP.ini settings
@@ -38,7 +38,7 @@ RUN { \
   } > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 # PECL extensions
-RUN pecl install APCu-4.0.10 redis memcached \
+RUN pecl install APCu-5.1.8 redis memcached \
   && docker-php-ext-enable apcu redis memcached
 
 RUN mkdir -p /root/src/mod_rpaf \
